@@ -2,12 +2,13 @@ FROM php:7.2-apache
 
 RUN apt-get update
 
+# Removing current available virtual host config and adding the one in the app's root folder.
 RUN rm -f /etc/apache2/sites-available/000-default.conf
 RUN rm -f /etc/apache2/sites-enabled/000-default.conf
 ADD ./000-default.conf /etc/apache2/sites-available
 RUN ln -s /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
-# 1. development packages
+# Installing development packages
 RUN apt-get install -y \
     git \
     zip \
@@ -23,12 +24,12 @@ RUN apt-get install -y \
     libfreetype6-dev \
     g++
 
-# 2. apache configs + document root
+# Apache configs + document root
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# 3. mod_rewrite for URL rewrite and mod_headers for .htaccess extra headers like Access-Control-Allow-Origin-
+# mod_rewrite for URL rewrite and mod_headers for .htaccess extra headers like Access-Control-Allow-Origin-
 RUN a2enmod rewrite headers
 
 # 4. start with base php config, then add extensions
