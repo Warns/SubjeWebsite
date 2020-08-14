@@ -1,2 +1,2 @@
-# subjebilisim-website
-Subje bilisim website bilgilerini içermektedir
+# SubjeBilisim Website
+## Dockerized version of the website.
