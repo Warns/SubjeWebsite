@@ -1,0 +1,23 @@
+version: "3.5"
+
+services:
+  laravel-app:
+    build:
+      context: "."
+      args:
+        uid: ${UID}
+    container_name: subjewebsite
+    environment:
+      - APACHE_RUN_USER=#${UID}
+      - APACHE_RUN_GROUP=#${UID}
+    volumes:
+      - .:/var/www/html
+    ports:
+      - 8000:80
+    networks:
+      backend:
+        aliases:
+          - subjewebsite
+networks:
+  backend:
+    name: backend-network
