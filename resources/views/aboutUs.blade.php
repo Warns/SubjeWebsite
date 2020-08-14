@@ -20,5 +20,4 @@
 </section>
 <!-- //banner-bottom -->
 
-
 @include('master/footer')

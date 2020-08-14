@@ -32,7 +32,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 # mod_rewrite for URL rewrite and mod_headers for .htaccess extra headers like Access-Control-Allow-Origin-
 RUN a2enmod rewrite headers
 
-# 4. start with base php config, then add extensions
+# Start with base php config, then add extensions
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
 RUN docker-php-ext-install \
@@ -47,10 +47,10 @@ RUN docker-php-ext-install \
     zip 
 
 
-# 5. composer
+# composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# 6. we need a user with the same UID/GID with host user
+# we need a user with the same UID/GID with host user
 # so when we execute CLI commands, all the host file's ownership remains intact
 # otherwise command from inside container will create root-owned files and directories
 ARG uid
