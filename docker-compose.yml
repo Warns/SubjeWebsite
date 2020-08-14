@@ -18,6 +18,8 @@ services:
       backend:
         aliases:
           - subjewebsite
+
+# Create a network bridge to server the app
 networks:
   backend:
     name: backend-network
