@@ -1,9 +1,9 @@
 # SubjeBilisim Website
 
-## Dockerized version of the website.
-
 Original website:
 https://github.com/SubjeBilisimTekno/subjebilisim-website
+
+## Dockerized version of the website.
 
 Steps done in the Dockerfile
 
