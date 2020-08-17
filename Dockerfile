@@ -30,6 +30,7 @@ RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-av
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 # mod_rewrite for URL rewrite and mod_headers for .htaccess extra headers like Access-Control-Allow-Origin-
+RUN a2enmod rewrite
 RUN a2enmod rewrite headers
 
 # Start with base php config, then add extensions
@@ -49,6 +50,10 @@ RUN docker-php-ext-install \
 
 # composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Trying to fix blade pages 404
+RUN composer global require laravel/installer
+
 
 # we need a user with the same UID/GID with host user
 # so when we execute CLI commands, all the host file's ownership remains intact
