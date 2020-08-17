@@ -11,7 +11,7 @@
 |
 */
 
-# Mert # Added to fix composer error.
+# Mert # Added to fix composer Illuminate error.
 $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
