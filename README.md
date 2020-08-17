@@ -1,6 +1,6 @@
 # SubjeBilisim Website
 
-Original website repo:
+Original repo:
 https://github.com/SubjeBilisimTekno/subjebilisim-website
 
 ## Dockerized version of the website.
