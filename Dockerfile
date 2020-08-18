@@ -8,6 +8,10 @@ RUN rm -f /etc/apache2/sites-enabled/000-default.conf
 ADD ./000-default.conf /etc/apache2/sites-available
 RUN ln -s /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
+COPY ./public /var/www/html/public
+COPY ./vendor vendor
+COPY ./bootstrap bootstrap
+
 # Installing development packages
 RUN apt-get install -y \
     git \
