@@ -54,6 +54,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Trying to fix blade pages 404
 RUN composer global require laravel/installer
 
+EXPOSE 80
 
 # we need a user with the same UID/GID with host user
 # so when we execute CLI commands, all the host file's ownership remains intact
