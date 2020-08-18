@@ -1,6 +1,5 @@
+FROM ubuntu:latest
 FROM php:7.2-apache
-
-RUN apt-get update
 
 # Removing current available virtual host config and adding the one in the app's root folder.
 RUN rm -f /etc/apache2/sites-available/000-default.conf
@@ -8,25 +7,7 @@ RUN rm -f /etc/apache2/sites-enabled/000-default.conf
 ADD ./000-default.conf /etc/apache2/sites-available
 RUN ln -s /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
-COPY ./public /var/www/html/public
-COPY ./vendor vendor
-COPY ./bootstrap bootstrap
-
-# Installing development packages
-RUN apt-get install -y \
-    git \
-    zip \
-    curl \
-    sudo \
-    unzip \
-    libicu-dev \
-    libbz2-dev \
-    libpng-dev \
-    libjpeg-dev \
-    libmcrypt-dev \
-    libreadline-dev \
-    libfreetype6-dev \
-    g++
+COPY . /var/www/html
 
 # Apache configs + document root
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
@@ -54,9 +35,31 @@ RUN docker-php-ext-install \
     pdo_mysql \
     zip 
 
+# # Installing development packages
+# RUN apt-get install -y \
+#     git \
+#     zip \
+#     curl \
+#     sudo \
+#     unzip \
+#     libicu-dev \
+#     libbz2-dev \
+#     libpng-dev \
+#     libjpeg-dev \
+#     libmcrypt-dev \
+#     libreadline-dev \
+#     libfreetype6-dev \
+#     g++
+
 
 # composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+RUN composer install \
+    --ignore-platform-reqs \
+    --no-interaction \
+    --no-plugins \
+    --no-scripts \
+    --prefer-dist
 
 # Trying to fix blade pages 404
 RUN composer global require laravel/installer
